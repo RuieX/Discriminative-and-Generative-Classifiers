@@ -5,3 +5,5 @@
 .idea/workspace.xml
 .idea/modules.xml
 src/__pycache__/evaluation.cpython-39.pyc
+*.pyc
+*.csv
