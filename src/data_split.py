@@ -8,8 +8,8 @@ class TrainTestSplit:
                  y_train: np.ndarray, y_test: np.ndarray):
         self.x_train = x_train
         self.x_test = x_test
-        self.y_train = pd.DataFrame(y_train)
-        self.y_test = pd.DataFrame(y_test)
+        self.y_train = y_train
+        self.y_test = y_test
 
     def to_csv(self, dir_path: str):
         if not os.path.exists(dir_path):
@@ -17,8 +17,8 @@ class TrainTestSplit:
 
         self.x_train.to_csv(f'{dir_path}/x_train.csv', index=False)
         self.x_test.to_csv(f'{dir_path}/x_test.csv', index=False)
-        self.y_train.to_csv(f'{dir_path}/y_train.csv', index=False)
-        self.y_test.to_csv(f'{dir_path}/y_test.csv', index=False)
+        pd.DataFrame(self.y_train).to_csv(f'{dir_path}/y_train.csv', index=False)
+        pd.DataFrame(self.y_test).to_csv(f'{dir_path}/y_test.csv', index=False)
 
     @staticmethod
     def from_csv_directory(dir_path: str) -> "TrainTestSplit":

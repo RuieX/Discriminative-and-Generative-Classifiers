@@ -1,22 +1,17 @@
 import numpy as np
-from math import sqrt
-from sklearn.metrics import mean_squared_error, mean_absolute_error
+import pandas as pd
+from sklearn.metrics import accuracy_score
 
 
 class Evaluation:
-    def __init__(self, y_real: np.ndarray, y_pred: np.ndarray):
+    def __init__(self, y_real: pd.DataFrame, y_pred: pd.DataFrame):
         self.y_pred = y_pred
         self.y_real = y_real
-
-        self.mae = mean_absolute_error(y_real, y_pred)
-        self.mse = mean_squared_error(y_real, y_pred)
-        self.rmse = sqrt(mean_squared_error(y_real, y_pred))
+        self.acc_score = accuracy_score(y_real, y_pred)
 
     def print_eval(self):
         print("--------------Model Evaluations:--------------")
-        print('Mean Absolute Error : {}'.format(self.mae))
-        print('Mean Squared Error : {}'.format(self.mse))
-        print('Root Mean Squared Error : {}'.format(self.rmse))
+        print('Accuracy score: {}'.format(self.acc_score))
         print()
 
 
