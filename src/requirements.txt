@@ -1,0 +1,5 @@
+numpy
+pandas
+scikit-learn
+
+TODO add libraries versions, and add other weird libraries
