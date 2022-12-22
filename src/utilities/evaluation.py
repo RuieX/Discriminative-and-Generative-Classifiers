@@ -41,20 +41,16 @@ class EvaluatedModel:
     @staticmethod
     def load_evaluation(model):
         return joblib.load(f'../models_evaluation/{model}.pkl')
-    
 
 
 # TODO add confusion matrix here
-def get_root_dir() -> str:
-    """
-    Returns the path to the root of directory project.
-    :return: string representing the dir path
-    """
+# As input it takes your predictions and the correct values:
+# conf_mat = confusion_matrix(labels, predictions)
+# print(conf_mat)
 
-    # Remember that the relative path here is relative to __file__,
-    # so an additional ".." is needed
-    return str(os.path.abspath(os.path.join(__file__, "../")))
-
+# TODO da appunti
+# from sklearn.metrics import plot_confusion_matrix
+# plot_confusion_matrix(estimator=dt, X=X_test_enc, y_true=y_test, cmap = 'Blues r'):
 
 def conf_mat(self, save: bool = False, file_name: str = "confusion_matrix.png"):
     """
@@ -63,18 +59,18 @@ def conf_mat(self, save: bool = False, file_name: str = "confusion_matrix.png"):
     :param save: if true the plot is saved
     :param file_name: file name for the image if saved
     """
-    if self._predicted:
-        cm = confusion_matrix(y_true=self._test.y, y_pred=self._y_pred)
-        disp = ConfusionMatrixDisplay(
-            confusion_matrix=cm,
-            display_labels=[str(n) for n in range(10)]
-        )
-        disp.plot()
-        if save:
-            save_path = os.path.join(get_root_dir(), "images", file_name)
-            logger.info(f"Saving {save_path}")
-            disp.figure_.savefig(save_path, dpi=300)
-    else:
-        raise Exception("Classifier not predicted yet")
+    cm = confusion_matrix(y_true=self._test.y, y_pred=self._y_pred)
+    disp = ConfusionMatrixDisplay(
+        confusion_matrix=cm,
+        display_labels=[str(n) for n in range(10)]
+    )
+    disp.plot()
 
+    # TODO DO NOT SAVE, I CAN JUST GENERATE IT AGAIN IF IT DOESN"T TAKE MUCH TIME
+    # if save:
+    #     save_path = os.path.join(get_root_dir(), "images", file_name)
+    #     logger.info(f"Saving {save_path}")
+    #     disp.figure_.savefig(save_path, dpi=300)
+
+# TODO explain what's the confusion matrix
 # TODO explain why i use accuracy and not something like F1 score
