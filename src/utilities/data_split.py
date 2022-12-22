@@ -51,3 +51,5 @@ def get_train_subset(x_train, y_train, size):
 
     return x_data_small, y_data_small
 
+# todo non serve salvare il subset dato che lo uso solo per gridsearch e mi salvo il risultato del gridsearch
+
