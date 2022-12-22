@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import os
+import joblib
 import pandas as pd
 import statistics as stat
 
-from os import path
 from loguru import logger
 from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 
@@ -15,6 +16,12 @@ class Evaluation:
         self.acc_score = accuracy_score(y_real, y_pred)
 
     def print_eval(self):
+        """
+        TODO non è la documentazione di questo metodo
+        If prediction was evaluated return the accuracy of prediction,
+            otherwise it raises an exception
+        :return: accuracy score of prediction
+        """
         logger.info("--------------Model Evaluations:--------------")
         logger.info('Accuracy score: {}'.format(self.acc_score))
 
@@ -25,57 +32,16 @@ class EvaluatedModel:
         self.train_eval = train_eval
         self.test_eval = test_eval
 
-    def save(self):
+    def save_evaluation(self, model):
+        if not os.path.exists('../models_evaluation'):
+            os.mkdir('../models_evaluation')
 
+        joblib.dump(self, f'../models_evaluation/{model}.pkl')
 
-
-@property
-def accuracy(self) -> float: # seba
-    """
-    If prediction was evaluated return the accuracy of prediction,
-        otherwise it raises an exception
-    :return: accuracy score of prediction
-    """
-    if self._predicted:
-        return accuracy_score(self._test.y, self._y_pred)
-    raise Exception("Classifier not predicted yet")
-
-
-def evaluate(self): # seba
-    """
-    It evaluates the accuracy associated to each k combination of the dataset
-        and then compute the average of the accuracy of predictions
-    """
-
-    accuracies = []
-
-    # get k predicts
-    for index, train_test in self._train_test.items():
-        logger.info(f" > Processing fold {index + 1}")
-        train, test = train_test
-        self._classifier.change_dataset(
-            train=train,
-            test=test
-        )
-        self._classifier.train()
-        self._classifier.predict()
-        accuracies.append(self._classifier.accuracy)
-
-    self._accuracy = stat.mean(accuracies)
-    self._evaluated = True
-
-@property
-def accuracyi(self) -> float: # seba
-    if self._evaluated:
-        return self._accuracy
-    raise Exception(f"{self._k}-fold cross validation not evaluated yet")
-
-
-class EvaluatedModel:
-    def __init__(self, model, train_eval: Evaluation, test_eval: Evaluation):
-        self.model = model
-        self.train_eval = train_eval
-        self.test_eval = test_eval
+    @staticmethod
+    def load_evaluation(model):
+        return joblib.load(f'../models_evaluation/{model}.pkl')
+    
 
 
 # TODO add confusion matrix here
@@ -87,7 +53,7 @@ def get_root_dir() -> str:
 
     # Remember that the relative path here is relative to __file__,
     # so an additional ".." is needed
-    return str(path.abspath(path.join(__file__, "../")))
+    return str(os.path.abspath(os.path.join(__file__, "../")))
 
 
 def conf_mat(self, save: bool = False, file_name: str = "confusion_matrix.png"):
@@ -105,7 +71,7 @@ def conf_mat(self, save: bool = False, file_name: str = "confusion_matrix.png"):
         )
         disp.plot()
         if save:
-            save_path = path.join(get_root_dir(), "images", file_name)
+            save_path = os.path.join(get_root_dir(), "images", file_name)
             logger.info(f"Saving {save_path}")
             disp.figure_.savefig(save_path, dpi=300)
     else:
