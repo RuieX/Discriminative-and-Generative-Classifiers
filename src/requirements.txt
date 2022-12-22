@@ -3,3 +3,4 @@ pandas
 scikit-learn
 
 TODO add libraries versions, and add other weird libraries
+TODO spiego l'ordine dei notebook

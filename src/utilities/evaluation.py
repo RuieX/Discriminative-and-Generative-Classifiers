@@ -19,6 +19,16 @@ class Evaluation:
         logger.info('Accuracy score: {}'.format(self.acc_score))
 
 
+class EvaluatedModel:
+    def __init__(self, model, train_eval: Evaluation, test_eval: Evaluation):
+        self.model = model
+        self.train_eval = train_eval
+        self.test_eval = test_eval
+
+    def save(self):
+
+
+
 @property
 def accuracy(self) -> float: # seba
     """
