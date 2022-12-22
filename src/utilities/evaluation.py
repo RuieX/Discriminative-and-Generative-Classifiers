@@ -15,9 +15,8 @@ class Evaluation:
         self.acc_score = accuracy_score(y_real, y_pred)
 
     def print_eval(self):
-        print("--------------Model Evaluations:--------------")
-        print('Accuracy score: {}'.format(self.acc_score))
-        print()
+        logger.info("--------------Model Evaluations:--------------")
+        logger.info('Accuracy score: {}'.format(self.acc_score))
 
 
 @property
