@@ -30,3 +30,24 @@ class TrainTestSplit:
         y_test = pd.read_csv(f'{dir_path}/y_test.csv').iloc[:, 0].values
 
         return TrainTestSplit(x_train, x_test, y_train, y_test)
+
+
+def get_train_subset(x_train, y_train, size):
+    """
+    balanced subset non ricordo come si chiama
+    :param x_train:
+    :param y_train:
+    :param size:
+    :return:
+    """
+
+    whole_data = x_train.copy()
+    whole_data["Number"] = y_train.copy()
+
+    data_small = whole_data.groupby('Number', group_keys=False).apply(lambda x: x.sample(int(size/10)))
+
+    y_data_small = data_small["Number"].copy()
+    x_data_small = data_small.drop(columns=['Number'])
+
+    return x_data_small, y_data_small
+
