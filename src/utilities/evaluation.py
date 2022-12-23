@@ -50,7 +50,10 @@ class EvaluatedModel:
 
 # TODO da appunti
 # from sklearn.metrics import plot_confusion_matrix
-# plot_confusion_matrix(estimator=dt, X=X_test_enc, y_true=y_test, cmap = 'Blues r'):
+# plot_confusion_matrix(estimator=dt, X=X_test_enc, y_true=y_test, cmap = 'Blues_r'):
+# è deprecato,
+# Function `plot_confusion_matrix` is deprecated in 1.0 and will be removed in 1.2.
+# Use one of the class methods: ConfusionMatrixDisplay.from_predictions or ConfusionMatrixDisplay.from_estimator.
 
 def conf_mat(self, save: bool = False, file_name: str = "confusion_matrix.png"):
     """
