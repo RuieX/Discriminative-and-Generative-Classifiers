@@ -6,7 +6,7 @@ from loguru import logger
 from sklearn.model_selection import GridSearchCV
 
 
-def model_selection(estimator, properties, scoring, cv, verbose, jobs, x_train, y_train):
+def model_selector(estimator, properties, scoring, cv, verbose, jobs, x_train, y_train):
     start_time = time.time()
     tuned_model = GridSearchCV(estimator, properties, scoring=scoring, cv=cv,
                                return_train_score=True, verbose=verbose, n_jobs=jobs)
