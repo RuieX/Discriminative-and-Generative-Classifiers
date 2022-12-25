@@ -33,6 +33,9 @@ class Evaluation:
 
 # TODO explain what's the confusion matrix
 # TODO explain why i use accuracy and not something like F1 score
+#%% md
+# accuracy is not a great measure of classifier performance when the classes are imbalanced
+# but as we can see from the plots, the classes are more or less balanced
 
 
 class EvaluatedModel:
