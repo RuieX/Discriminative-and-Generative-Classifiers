@@ -7,6 +7,18 @@ from sklearn.model_selection import GridSearchCV
 
 
 def model_selector(estimator, properties, scoring, cv, verbose, jobs, x_train, y_train):
+    """
+    model selection using GridSearchCV, and print the execution time along with the best score and best parameters
+    :param estimator:
+    :param properties:
+    :param scoring:
+    :param cv:
+    :param verbose:
+    :param jobs:
+    :param x_train:
+    :param y_train:
+    :return:
+    """
     start_time = time.time()
     tuned_model = GridSearchCV(estimator, properties, scoring=scoring, cv=cv,
                                return_train_score=True, verbose=verbose, n_jobs=jobs)
@@ -15,14 +27,26 @@ def model_selector(estimator, properties, scoring, cv, verbose, jobs, x_train, y
 
     logger.info("Best Score: {:.3f}".format(tuned_model.best_score_))
     logger.info("Best Params: ", tuned_model.best_params_)
+
     return tuned_model
 
 
 def save_model(model, model_name):
+    """
+    save tuned model
+    :param model:
+    :param model_name:
+    :return:
+    """
     if not os.path.exists('../tuned_models'):
         os.mkdir('../tuned_models')
     joblib.dump(model, f'../tuned_models/{model_name}.pkl')
 
 
 def load_model(model_name):
+    """
+    load previously saved tuned model
+    :param model_name:
+    :return:
+    """
     return joblib.load(f"../tuned_models/{model_name}.pkl")

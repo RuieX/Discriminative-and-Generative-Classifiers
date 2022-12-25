@@ -4,6 +4,9 @@ import pandas as pd
 
 
 class TrainTestSplit:
+    """
+    class used to represent the train and test split of the original dataset
+    """
     def __init__(self, x_train: pd.DataFrame, x_test: pd.DataFrame,
                  y_train: np.ndarray, y_test: np.ndarray):
         self.x_train = x_train
@@ -12,6 +15,11 @@ class TrainTestSplit:
         self.y_test = y_test
 
     def to_csv(self, dir_path: str):
+        """
+        save the split data
+        :param dir_path:
+        :return:
+        """
         if not os.path.exists(dir_path):
             os.mkdir(dir_path)
 
@@ -22,6 +30,11 @@ class TrainTestSplit:
 
     @staticmethod
     def from_csv_directory(dir_path: str) -> "TrainTestSplit":
+        """
+        load previously saved split data
+        :param dir_path:
+        :return:
+        """
         x_train = pd.read_csv(f'{dir_path}/x_train.csv')
         x_test = pd.read_csv(f'{dir_path}/x_test.csv')
 
@@ -34,13 +47,12 @@ class TrainTestSplit:
 
 def get_train_subset(x_train, y_train, size):
     """
-    balanced subset non ricordo come si chiama
+    get a subset using stratified sampling
     :param x_train:
     :param y_train:
     :param size:
     :return:
     """
-
     whole_data = x_train.copy()
     whole_data["Number"] = y_train.copy()
 
@@ -50,6 +62,3 @@ def get_train_subset(x_train, y_train, size):
     x_data_small = data_small.drop(columns=['Number'])
 
     return x_data_small, y_data_small
-
-# todo non serve salvare il subset dato che lo uso solo per gridsearch e mi salvo il risultato del gridsearch
-

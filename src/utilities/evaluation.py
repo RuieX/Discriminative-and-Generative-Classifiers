@@ -15,27 +15,23 @@ class Evaluation:
 
     def acc_eval(self):
         """
-        TODO non è la documentazione di questo metodo
-        If prediction was evaluated return the accuracy of prediction,
-            otherwise it raises an exception
-        :return: accuracy score of prediction
+        return the accuracy score of the predictions
+        :return:
         """
         print("-----Model Evaluations:-----")
         print('Accuracy score: {}'.format(self.acc_score))
     
     def conf_mat(self):
+        """
+        plot the confusion matrix
+        :return:
+        """
         cmat = confusion_matrix(y_true=self.y_real, y_pred=self.y_pred)
         disp = ConfusionMatrixDisplay(
             confusion_matrix=cmat,
             display_labels=[str(n) for n in range(10)]
         )
         disp.plot(cmap='Blues_r')
-
-# TODO explain what's the confusion matrix
-# TODO explain why i use accuracy and not something like F1 score
-#%% md
-# accuracy is not a great measure of classifier performance when the classes are imbalanced
-# but as we can see from the plots, the classes are more or less balanced
 
 
 class EvaluatedModel:
@@ -46,6 +42,10 @@ class EvaluatedModel:
         self.test_eval = test_eval
 
     def save_evaluation(self):
+        """
+        save the model and the train set and test set evaluations
+        :return:
+        """
         if not os.path.exists('../models_evaluation'):
             os.mkdir('../models_evaluation')
 
@@ -53,4 +53,9 @@ class EvaluatedModel:
 
     @staticmethod
     def load_evaluation(model_name):
+        """
+        load previously saved model and its evaluations
+        :param model_name:
+        :return:
+        """
         return joblib.load(f'../models_evaluation/{model_name}.pkl')
