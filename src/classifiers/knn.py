@@ -11,7 +11,7 @@ from sklearn.utils.validation import check_X_y
 class KNN(BaseEstimator, ClassifierMixin):
     def __init__(self, k: int = 5, metric: str = "euclidean"):
         """
-
+        init
         :param k: Number of neighbors to consider.
         :param metric: Metric for distance computation. Default is “euclidean”, otherwise "manhattan".
         """
@@ -38,46 +38,28 @@ class KNN(BaseEstimator, ClassifierMixin):
     def predict(self, X_test: np.ndarray) -> np.ndarray:
         output_pred = []
 
+        # distances To store the distances
+        # sorting distances in ascending order, # Order each neighbor
+        # order each column from smallest to greatest
+        # Training set as rows, target set as columns
+        if self.metric == "euclidean":
+            distances = np.argsort(euclidean_distances(self.X_train, X_test), axis=0)  # Euclidean distance
+        else:
+            distances = np.argsort(manhattan_distances(self.X_train, X_test), axis=0)  # Manhattan distance
+
         # Calculating distances
         for i in range(X_test.shape[0]):  # for each sample in X_test
-            distances = []  # To store the distances
-            for j in range(self.X_train.shape[0]):  # for each sample in X_train
-                if self.metric == "euclidean":
-                    dist = euclidean_distances(self.X_train[j, :], X_test[i, :])  # Euclidean distance
-                else:
-                    dist = manhattan_distances(self.X_train[j, :], X_test[i, :])  # Manhattan distance
-                distances.append((dist, self.y_train[j]))
-            distances = sorted(distances)  # sorting distances in ascending order, # Order each neighbor
-
             # Getting k nearest neighbors
+            #     # Distance indexes of the i-th row, which represents the
+            #     #   i-th entry of the set of samples to predict
             neighbors = []
-            for item in range(self.k):
-                neighbors.append(distances[item][1])
+            for nbr in range(self.k):
+                neighbors.append(self.y_train[distances[:, i][nbr]])
 
             # Making predictions
-            output_pred.append(st.mode(a=neighbors, axis=None, keepdims=False).mode)
-
-        return np.array(output_pred)
-
-    def predict(self, X_data: np.ndarray) -> np.ndarray:
-        # Order each neighbor
-        distances_asc_idx = np.argsort(
-            # Training set as rows, target set as columns
-            euclidean_distances(self.X_train, X_data) if self.metric == "euclidean" else manhattan_distances(self.X_train, X_data),
-            axis=0  # order each column from smallest to greatest
-        )
-
-        output_predictions = []
-        for i in range(X_data.shape[0]):
-            # Distance indexes of the i-th row, which represents the
-            #   i-th entry of the set of samples to predict
-            ith_distances = distances_asc_idx[:, i]
-            closest_k_idx = ith_distances[:self.k]
-            closest_k_labels = self.y_train[closest_k_idx]
-
             # st.mode with the below parameters returns a named tuple with fields ("mode", "count"),
             #   each of which has a single value (because keepdims = False)
             # prediction: Tuple[np.ndarray, np.ndarray] =
-            output_predictions.append(st.mode(a=closest_k_labels, axis=None, keepdims=False).mode)
+            output_pred.append(st.mode(a=neighbors, axis=None, keepdims=False).mode)
 
-        return np.array(output_predictions)
+        return np.array(output_pred)
