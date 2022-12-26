@@ -56,6 +56,7 @@ def get_train_subset(x_train, y_train, size):
     whole_data = x_train.copy()
     whole_data["Number"] = y_train.copy()
 
+    # to get balanced classes
     data_small = whole_data.groupby('Number', group_keys=False).apply(lambda x: x.sample(int(size/10)))
 
     y_data_small = data_small["Number"].copy()
