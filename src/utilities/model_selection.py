@@ -25,9 +25,6 @@ def model_selector(estimator, properties, scoring, cv, verbose, jobs, x_train, y
     tuned_model.fit(x_train, y_train)
     logger.info("--- %s seconds ---" % (time.time() - start_time))
 
-    logger.info("Best Score: {:.3f}".format(tuned_model.best_score_))
-    logger.info("Best Params: ", tuned_model.best_params_)
-
     return tuned_model
 
 
