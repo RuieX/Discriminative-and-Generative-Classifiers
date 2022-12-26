@@ -8,7 +8,7 @@ from sklearn.model_selection import GridSearchCV
 
 def model_selector(estimator, properties, scoring, cv, verbose, jobs, x_train, y_train):
     """
-    model selection using GridSearchCV, and print the execution time along with the best score and best parameters
+    model selection using GridSearchCV, and print the execution time
     :param estimator:
     :param properties:
     :param scoring:
