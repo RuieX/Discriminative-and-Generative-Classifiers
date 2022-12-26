@@ -20,18 +20,18 @@ class KNN(BaseEstimator, ClassifierMixin):
         self.X_train = None
         self.y_train = None
 
-    def fit(self, X_data: pd.DataFrame, y_data: pd.DataFrame | np.ndarray) -> KNN:
+    def fit(self, X_train: pd.DataFrame, y_train: pd.DataFrame | np.ndarray) -> KNN:
         """
         Checks X and y for consistent length, and convert them to ndarray if necessary
         the shape of X is expected to be (n_samples, n_features)
         the shape of y is expected to be (n_samples, 1)
-        :param X_data: Training samples.
-        :param y_data: Training labels.
+        :param X_train: Training samples.
+        :param y_train: Training labels.
         :return:
         """
-        X_data, y_data = check_X_y(X_data, y_data)
-        self.X_train = X_data
-        self.y_train = y_data
+        X_train, y_train = check_X_y(X_train, y_train)
+        self.X_train = X_train
+        self.y_train = y_train
 
         return self
 
