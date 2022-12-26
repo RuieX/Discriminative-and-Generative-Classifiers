@@ -38,28 +38,22 @@ class KNN(BaseEstimator, ClassifierMixin):
     def predict(self, X_test: np.ndarray) -> np.ndarray:
         output_pred = []
 
-        # distances To store the distances
-        # sorting distances in ascending order, # Order each neighbor
-        # order each column from smallest to greatest
-        # Training set as rows, target set as columns
+        # train set as rows, test set as columns
+        # store the distances, sorted in ascending order for each test sample column
         if self.metric == "euclidean":
             distances = np.argsort(euclidean_distances(self.X_train, X_test), axis=0)  # Euclidean distance
         else:
             distances = np.argsort(manhattan_distances(self.X_train, X_test), axis=0)  # Manhattan distance
 
-        # Calculating distances
-        for i in range(X_test.shape[0]):  # for each sample in X_test
-            # Getting k nearest neighbors
-            #     # Distance indexes of the i-th row, which represents the
-            #     #   i-th entry of the set of samples to predict
+        # compute distances
+        for i in range(X_test.shape[0]):  # for each test sample
+            # Get k nearest neighbors, label
+            # the i-th column represents the distances between the train set samples and the i-th test sample
             neighbors = []
             for nbr in range(self.k):
                 neighbors.append(self.y_train[distances[:, i][nbr]])
 
-            # Making predictions
-            # st.mode with the below parameters returns a named tuple with fields ("mode", "count"),
-            #   each of which has a single value (because keepdims = False)
-            # prediction: Tuple[np.ndarray, np.ndarray] =
+            # compute predictions by getting the mode
             output_pred.append(st.mode(a=neighbors, axis=None, keepdims=False).mode)
 
         return np.array(output_pred)
