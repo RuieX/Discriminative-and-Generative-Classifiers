@@ -17,10 +17,9 @@ class Beta_NB(BaseEstimator):
         self.labels = None
         self.labels_params = {}
 
-    def fit(self, X_train: pd.DataFrame, y_train: pd.DataFrame | np.ndarray):
-        # convert y_train to pd.Dataframe if necessary for convenience
+    def fit(self, X_train: pd.DataFrame, y_train: np.ndarray):
         self.X_train = X_train
-        self.y_train = pd.DataFrame(y_train) if isinstance(y_train, np.ndarray) else y_train
+        self.y_train = y_train
 
         # get labels
         self.labels = unique_labels(y_train)
