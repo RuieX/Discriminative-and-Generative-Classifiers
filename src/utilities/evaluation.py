@@ -112,8 +112,8 @@ class ModelsComparison:
         plot the score
         :return:
         """
-        sns.set(rc={"figure.figsize":(8, 4)})
-        plot = sns.lineplot(data=self.all_performances, x="model", y="Accuracy Score", hue="model",style="model", palette="bright", markers=True)
+        sns.set(rc={"figure.figsize": (8, 4)})
+        plot = sns.lineplot(data=self.all_performances, x="model", y="Accuracy Score", hue="model", style="model", palette="bright", markers=True)
         plot.tick_params(axis="x", rotation=90)
 
         return plot
