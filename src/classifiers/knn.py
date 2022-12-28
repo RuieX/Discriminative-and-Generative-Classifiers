@@ -36,7 +36,7 @@ class KNN(BaseEstimator, ClassifierMixin):
         return self
 
     def predict(self, X_test: np.ndarray) -> np.ndarray:
-        output_pred = []
+        y_pred = []
 
         # train set as rows, test set as columns
         # store the distances, sorted in ascending order for each test sample column
@@ -54,6 +54,6 @@ class KNN(BaseEstimator, ClassifierMixin):
                 neighbors.append(self.y_train[distances[:, i][nbr]])
 
             # compute predictions by getting the mode
-            output_pred.append(st.mode(a=neighbors, axis=None, keepdims=False).mode)
+            y_pred.append(st.mode(a=neighbors, axis=None, keepdims=False).mode)
 
-        return np.array(output_pred)
+        return np.array(y_pred)
