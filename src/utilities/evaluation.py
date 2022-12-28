@@ -35,10 +35,9 @@ class Evaluation:
 
 
 class EvaluatedModel:
-    def __init__(self, model, name, train_eval: Evaluation, test_eval: Evaluation):
+    def __init__(self, model, name, test_eval: Evaluation):
         self.model = model
         self.model_name = name
-        self.train_eval = train_eval
         self.test_eval = test_eval
 
     def save_evaluation(self):
